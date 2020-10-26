@@ -5,22 +5,29 @@ class project1Cryptanalysis:
 
     def __init__(self):
         #print "Enter Cipher Text: "
-        ciphertext = str(raw_input("Enter Cipher Text: "))
+        #ciphertext = str(raw_input("Enter Cipher Text: "))
+        ciphertext = open("t").read()
+        print ciphertext
         #Assuming it's a string like -> 98,23,11,23,79,34,23,56,34,82,34,11,23
         ciphertext = ciphertext.split(",")  #Coverted it to an array
        
 
         dictionary1 = self.read_dictionary1()
-        dictionary2 = self.read_dictionary2()
 
         dictionary1.insert(0,"cbcb gbgg gcb")
         #ciphertext = [98,23,11,23,79,34,23,56,34,82,34,11,23]
 
-        for candidate_plaintexts in dictionary1:
-            found = self.analyseCandidatePlaintext(candidate_plaintexts,ciphertext)
+        for candidate_plaintext in dictionary1:
+            found = self.analyseCandidatePlaintext(candidate_plaintext,ciphertext)
             if found:
-                print "My plaintext guess is:", candidate_plaintexts
-                break
+                print "My plaintext guess is:", candidate_plaintext
+                #break
+        found = False
+        
+        if not found: #Move on to dictionary 2
+            print "here"
+            dictionary2 = self.read_dictionary2()
+            self.generateCandidatePlaintexts(dictionary2)
 
     def read_dictionary1(self):
         candidate_plaintexts = []
@@ -41,7 +48,11 @@ class project1Cryptanalysis:
         #print (candidate_plaintexts)
         return candidate_plaintexts
 
-
+    def generateCandidatePlaintexts(self, dictionary):
+        print "Here: ", dictionary
+        combinations = []
+        #for 
+        
 
     #Groups char based on their frequency
     #Let's call this charFreq mapping
