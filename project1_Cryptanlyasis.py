@@ -4,18 +4,14 @@ Key_To_Frequency_Mapping = {" ":19, "a":7, "b":1,"c":2,"d":4,"e":10,"f":2,"g":2,
 class project1Cryptanalysis:
 
     def __init__(self):
-        #print "Enter Cipher Text: "
-        #ciphertext = str(raw_input("Enter Cipher Text: "))
-        ciphertext = open("t").read()
-        print ciphertext
+        ciphertext = str(raw_input("Enter Cipher Text: "))
+        #ciphertext = open("t").read()
+        #print ciphertext
         #Assuming it's a string like -> 98,23,11,23,79,34,23,56,34,82,34,11,23
         ciphertext = ciphertext.split(",")  #Coverted it to an array
        
 
         dictionary1 = self.read_dictionary1()
-
-        dictionary1.insert(0,"cbcb gbgg gcb")
-        #ciphertext = [98,23,11,23,79,34,23,56,34,82,34,11,23]
 
         for candidate_plaintext in dictionary1:
             found = self.analyseCandidatePlaintext(candidate_plaintext,ciphertext)
