@@ -21,13 +21,22 @@ class project1Cryptanalysis:
             found = self.analyseCandidatePlaintext(candidate_plaintext,ciphertext)
             if found:
                 print "My plaintext guess is:", candidate_plaintext
-                #break
-        found = False
+                break
+        
         
         if not found: #Move on to dictionary 2
-            print "here"
+            print "Checking Dictionary 2. Hang in there, this might take a while..."
             dictionary2 = self.read_dictionary2()
-            self.generateCandidatePlaintexts(dictionary2)
+            
+            candidate_plaintexts = self.generateCandidatePlaintexts(dictionary2)
+            
+            for candidate_plaintext in candidate_plaintexts:
+                candidate_plaintext = " ".join(candidate_plaintext)[0:500]
+                found = self.analyseCandidatePlaintext(candidate_plaintext,ciphertext)
+                if found:
+                    print "My plaintext guess is:", candidate_plaintext
+                    break
+
 
     def read_dictionary1(self):
         candidate_plaintexts = []
@@ -49,10 +58,21 @@ class project1Cryptanalysis:
         return candidate_plaintexts
 
     def generateCandidatePlaintexts(self, dictionary):
-        print "Here: ", dictionary
-        combinations = []
-        #for 
+        return self.permute(dictionary)
         
+    def permute(self, s):
+        if len(s) == 0:
+            return [[]]
+
+        ret = [s[0:1] + x for x in self.permute(s[1:])]
+
+        for i in range(1, len(s)):
+            if s[i] == s[0]:
+                continue
+            s[0], s[i] = s[i], s[0]
+            ret += [s[0:1] + x for x in self.permute(s[1:])]
+
+        return ret
 
     #Groups char based on their frequency
     #Let's call this charFreq mapping
